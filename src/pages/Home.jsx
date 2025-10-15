@@ -31,7 +31,7 @@ const Home = ({ onStartGame, onMintPass }) => {
           transition={{ delay: 0.3 }}
           className="font-retro text-xl text-white mb-8 max-w-2xl"
         >
-          A blockchain mining adventure on Stacks (Bitcoin Layer 2)
+          A blockchain word guessing game on Stacks (Bitcoin Layer 2)
         </motion.p>
 
         {/* Wallet Connect */}
@@ -51,29 +51,29 @@ const Home = ({ onStartGame, onMintPass }) => {
             <div className="flex items-start gap-3">
               <FaCoins className="text-game-yellow text-3xl mt-1" />
               <div>
-                <h3 className="font-pixel text-sm text-white mb-2">Physics Shooting</h3>
-                <p className="font-retro text-gray-300">Drag and release to launch projectiles! Destroy blocks with realistic physics like Angry Birds</p>
+                <h3 className="font-pixel text-sm text-white mb-2">Word Quest</h3>
+                <p className="font-retro text-gray-300">Guess 5-letter words in 6 attempts! Stake STX and win up to 5x your deposit</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <GiCrystalShine className="text-blue-400 text-3xl mt-1" />
               <div>
-                <h3 className="font-pixel text-sm text-white mb-2">Level Up</h3>
-                <p className="font-retro text-gray-300">Earn XP from mining. Every 500 XP = Level Up!</p>
+                <h3 className="font-pixel text-sm text-white mb-2">Smart Rewards</h3>
+                <p className="font-retro text-gray-300">Win faster for bigger multipliers! 5x for 1 attempt, down to 1x for 5-6 attempts</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <GiTreasureMap className="text-green-400 text-3xl mt-1" />
               <div>
-                <h3 className="font-pixel text-sm text-white mb-2">Mint NFTs</h3>
-                <p className="font-retro text-gray-300">Get Quest Pass to start, then mint Quest Badges as you level up</p>
+                <h3 className="font-pixel text-sm text-white mb-2">Blockchain Gaming</h3>
+                <p className="font-retro text-gray-300">All games are recorded on Stacks blockchain with transparent rewards</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <FaGamepad className="text-purple-400 text-3xl mt-1" />
               <div>
-                <h3 className="font-pixel text-sm text-white mb-2">Compete</h3>
-                <p className="font-retro text-gray-300">Climb the leaderboard and prove you're the ultimate miner!</p>
+                <h3 className="font-pixel text-sm text-white mb-2">Multiple Modes</h3>
+                <p className="font-retro text-gray-300">Play Word Quest, Physics Mode, or Classic Mining - all with blockchain rewards!</p>
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@ const Home = ({ onStartGame, onMintPass }) => {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => onStartGame('physics')}
+            onClick={() => onStartGame('word')}
             disabled={!walletConnected}
             className={`flex items-center gap-3 px-8 py-4 rounded-lg font-pixel text-lg transition-all ${
               walletConnected
@@ -93,7 +93,22 @@ const Home = ({ onStartGame, onMintPass }) => {
             }`}
           >
             <FaGamepad />
-            Play Physics Mode
+            Play Word Quest
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => onStartGame('physics')}
+            disabled={!walletConnected}
+            className={`flex items-center gap-3 px-8 py-4 rounded-lg font-pixel text-sm transition-all ${
+              walletConnected
+                ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            <FaGamepad />
+            Physics Mode
           </motion.button>
           
           <motion.button

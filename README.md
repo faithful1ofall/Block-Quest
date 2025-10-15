@@ -1,6 +1,6 @@
 # 🧱 Block Quest
 
-A browser-based blockchain mining adventure built on **Stacks** (Bitcoin Layer 2).
+A browser-based blockchain word guessing game built on **Stacks** (Bitcoin Layer 2).
 
 ![Block Quest](https://img.shields.io/badge/Built%20on-Stacks-5546FF?style=for-the-badge)
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)
@@ -8,21 +8,30 @@ A browser-based blockchain mining adventure built on **Stacks** (Bitcoin Layer 2
 
 ## 🎮 About
 
-Block Quest is a physics-based shooting game inspired by Angry Birds, where players launch projectiles to destroy block structures, earn points, level up, and mint NFTs on the Stacks blockchain as proof of their achievements. The game combines engaging physics gameplay with Web3 technology.
+Block Quest is a Wordle-style word guessing game with blockchain staking, where players deposit STX tokens, guess 5-letter words, and win rewards based on their performance. The faster you guess correctly, the higher your multiplier! The game combines engaging word puzzle gameplay with Web3 staking mechanics.
 
 ### Game Modes
 
-- **Physics Mode** 🎯 - Angry Birds-style slingshot mechanics with realistic physics
+- **Word Quest** 🎯 - Wordle-style word guessing with STX staking (5x-1x multipliers)
+- **Physics Mode** 🎮 - Angry Birds-style slingshot mechanics with realistic physics
 - **Classic Mode** 💎 - Original click-to-mine gameplay
 
 ## ✨ Features
 
-### Physics Mode (NEW!)
+### Word Quest (NEW! 🔥)
+- 🎯 **Wordle-Style Gameplay** - Guess 5-letter words in 6 attempts
+- 💰 **STX Staking** - Deposit STX tokens to play and win rewards
+- 📊 **Dynamic Multipliers** - 5x for 1 attempt, down to 1x for 5-6 attempts
+- 🎨 **Color-Coded Feedback** - Green (correct position), Yellow (wrong position), Gray (not in word)
+- ⌨️ **Dual Input** - Virtual keyboard + physical keyboard support
+- 🎮 **Smart Animations** - Tile flips, shake effects, smooth transitions
+- 💎 **Blockchain Rewards** - Win up to 5x your deposit based on performance
+
+### Physics Mode
 - 🎯 **Slingshot Mechanics** - Drag and release to launch projectiles
 - 💥 **Realistic Physics** - Powered by Matter.js physics engine
 - 🧱 **Destructible Blocks** - Wooden, stone, metal, and crystal blocks
 - 📊 **Trajectory Preview** - See your shot path before launching
-- 🎮 **Multiple Projectile Types** - Standard, heavy, explosive, and crystal blocks
 
 ### Classic Mode
 - 🎯 **Interactive Mining Grid** - 10×10 grid with randomized rewards
@@ -31,13 +40,39 @@ Block Quest is a physics-based shooting game inspired by Angry Birds, where play
 ### Shared Features
 - 📈 **Leveling System** - Earn XP and level up your character
 - 🏆 **NFT Minting** - Mint Quest Pass and Quest Badge NFTs on Stacks
-- 🔗 **Wallet Integration** - Connect with Stacks wallet (Hiro, Xverse)
+- 🔗 **Wallet Integration** - Connect with Stacks wallet (Hiro, Xverse, Leather)
 - 🎨 **Retro Pixel Theme** - Nostalgic arcade-style UI with animations
 - 💾 **Progress Saving** - LocalStorage persistence for game state
 
 ## 🎲 Gameplay
 
-### Physics Mode (Angry Birds Style) 🎯
+### Word Quest (Wordle + Staking) 🎯
+
+**How to Play:**
+1. **Connect Wallet** - Connect your Stacks wallet (Hiro, Xverse, or Leather)
+2. **Deposit STX** - Choose your stake amount (minimum 1 STX)
+3. **Guess the Word** - You have 6 attempts to guess a 5-letter word
+4. **Color Feedback**:
+   - 🟩 **Green** - Correct letter in correct position
+   - 🟨 **Yellow** - Correct letter in wrong position
+   - ⬜ **Gray** - Letter not in word
+5. **Win Rewards** - Guess correctly to win your deposit × multiplier
+6. **Claim** - Claim your STX rewards after winning
+
+**Multiplier System:**
+- **1 attempt** → 5x multiplier (500% return!)
+- **2 attempts** → 4x multiplier (400% return)
+- **3 attempts** → 3x multiplier (300% return)
+- **4 attempts** → 2x multiplier (200% return)
+- **5-6 attempts** → 1x multiplier (100% return)
+- **Lose** → Lose your deposit
+
+**Example:**
+- Deposit: 10 STX
+- Win on 2nd attempt: Get 40 STX (4x multiplier)
+- Net profit: 30 STX
+
+### Physics Mode (Angry Birds Style) 🎮
 
 **How to Play:**
 1. **Aim** - Click and drag from the slingshot to aim
@@ -58,12 +93,6 @@ Click on any unmined block to discover:
 - **20%** - Crystals 💎 (+1 crystal, +50 XP)
 - **15%** - Empty ∅ (+5 XP)
 - **5%** - Trap 💀 (+1 trap, -20 XP)
-
-### Leveling Up
-
-- Earn **500 XP per level** to advance
-- Each level unlocks the ability to mint a new Quest Badge NFT
-- Track your progress with the XP progress bar
 
 ### NFT System
 
@@ -119,14 +148,18 @@ npm run preview
 block-quest/
 ├── src/
 │   ├── components/
+│   │   ├── WordGame.jsx          # Word guessing game component
 │   │   ├── GameGrid.jsx          # 10×10 mining grid
+│   │   ├── PhysicsGame.jsx       # Physics-based game
 │   │   ├── Inventory.jsx         # Player stats & inventory
 │   │   ├── WalletConnect.jsx     # Wallet connection UI
 │   │   ├── MintModal.jsx         # NFT minting modal
 │   │   └── LevelUpModal.jsx      # Level up celebration
 │   ├── pages/
 │   │   ├── Home.jsx              # Landing page
-│   │   └── Game.jsx              # Main game page
+│   │   ├── WordGamePage.jsx      # Word Quest game page
+│   │   ├── PhysicsGamePage.jsx   # Physics mode page
+│   │   └── Game.jsx              # Classic mode page
 │   ├── context/
 │   │   └── GameContext.jsx       # Global game state
 │   ├── utils/
@@ -134,6 +167,9 @@ block-quest/
 │   ├── App.jsx                   # Root component
 │   ├── main.jsx                  # Entry point
 │   └── index.css                 # Global styles
+├── contracts/
+│   ├── quest-nft.clar            # NFT contract (deployed)
+│   └── word-game.clar            # Word game contract (pending)
 ├── public/
 ├── index.html
 ├── vite.config.js
@@ -141,14 +177,47 @@ block-quest/
 └── package.json
 ```
 
-## 🔗 Smart Contract (Clarity)
+## 🔗 Smart Contracts (Clarity)
 
-**Deployed Contract on Stacks Testnet:**
+### Word Game Contract (word-game.clar)
+
+**Status**: Ready for deployment
+
+The Word Game contract manages the staking and reward system:
+
+```clarity
+;; Deposit STX and start a game
+(define-public (deposit-and-play (amount uint))
+  ;; Transfers STX from player to contract
+  ;; Creates new game record
+  ;; Returns game-id
+)
+
+;; Resolve game with multiplier (owner only)
+(define-public (resolve-game (game-id uint) (multiplier uint))
+  ;; Sets the multiplier (0-5) based on game outcome
+  ;; Marks game as resolved
+)
+
+;; Claim reward after game is resolved
+(define-public (claim-reward (game-id uint))
+  ;; Transfers (deposit × multiplier) STX to player
+  ;; Marks reward as claimed
+)
+
+;; Read-only functions
+(define-read-only (get-game (game-id uint)))
+(define-read-only (get-next-game-id))
+```
+
+### NFT Contract (quest-nft.clar)
+
+**Deployed on Stacks Testnet:**
 - **Contract Address**: `ST28MDT9SAV31XJ73M2W3W5DVC1NWHYX713Q6SEP5.quest-nft`
 - **Transaction ID**: `0x564953a1c95f0d819e0e6083bda9d37cc1bf43f9eda6a0f97ded5d72b7a66820`
 - **Explorer**: [View on Stacks Explorer](https://explorer.hiro.so/txid/0x564953a1c95f0d819e0e6083bda9d37cc1bf43f9eda6a0f97ded5d72b7a66820?chain=testnet)
 
-The contract implements:
+The NFT contract implements Quest Pass and Quest Badge minting:
 
 ```clarity
 ;; Quest Pass NFT
@@ -158,14 +227,14 @@ The contract implements:
 (define-non-fungible-token quest-badge uint)
 
 ;; Mint Quest Pass
-(define-public (mint-pass)
+(define-public (mint-quest-pass)
   (let ((token-id (+ (var-get last-pass-id) u1)))
     (try! (nft-mint? quest-pass token-id tx-sender))
     (var-set last-pass-id token-id)
     (ok token-id)))
 
 ;; Mint Quest Badge
-(define-public (mint-badge (level uint))
+(define-public (mint-quest-badge (level uint))
   (let ((token-id (+ (var-get last-badge-id) u1)))
     (try! (nft-mint? quest-badge token-id tx-sender))
     (var-set last-badge-id token-id)
@@ -174,14 +243,30 @@ The contract implements:
 
 ## 🎯 Roadmap
 
-- [x] Deploy smart contracts to Stacks Testnet ✅
-- [x] Integrate real wallet connection and NFT minting ✅
-- [ ] Deploy smart contracts to Stacks Mainnet
+### Completed ✅
+- [x] Word Quest game with Wordle-style mechanics
+- [x] STX staking and multiplier system
+- [x] Color-coded feedback system
+- [x] Virtual and physical keyboard support
+- [x] Deploy NFT contract to Stacks Testnet
+- [x] Integrate wallet connection and NFT minting
+- [x] Physics mode with Matter.js
+- [x] Classic mining mode
+
+### In Progress 🚧
+- [ ] Deploy word-game contract to Stacks Testnet
+- [ ] End-to-end testing with real STX transactions
+- [ ] Backend/oracle for automated game resolution
+
+### Future Plans 🔮
+- [ ] Deploy contracts to Stacks Mainnet
 - [ ] Add leaderboard with on-chain verification
-- [ ] Implement multiplayer mining zones
-- [ ] Add rare legendary items (1% drop rate)
-- [ ] Create marketplace for trading NFTs
+- [ ] Expand word list (100+ words)
+- [ ] Daily challenges with bonus rewards
+- [ ] Multiplayer word battles
+- [ ] NFT marketplace for trading Quest Badges
 - [ ] Mobile app version
+- [ ] Tournament mode with prize pools
 
 ## 🤝 Contributing
 
@@ -200,8 +285,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - Built for DoraHacks hackathon
-- Powered by Stacks blockchain
-- Inspired by classic mining games
+- Powered by Stacks blockchain (Bitcoin Layer 2)
+- Inspired by Wordle and classic word games
+- Physics engine by Matter.js
+- UI animations by Framer Motion
 
 ## 📞 Contact
 
