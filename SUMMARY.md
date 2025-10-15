@@ -25,11 +25,13 @@ All tasks have been successfully completed! Block Quest is now a fully functiona
 - ✅ Implements Quest Pass and Quest Badge NFTs
 
 ### 3. **Blockchain Integration**
-- ✅ Real wallet connection using Stacks.js
-- ✅ Actual NFT minting via contract calls
+- ✅ Modern Stacks Connect API implementation
+- ✅ Real wallet connection using `connect()` from @stacks/connect
+- ✅ Actual NFT minting via `request()` API
 - ✅ Support for Hiro and Xverse wallets
 - ✅ Testnet configuration
 - ✅ Transaction handling and error management
+- ✅ Following Hiro documentation best practices
 
 ### 4. **Documentation**
 - ✅ Comprehensive README.md
@@ -67,7 +69,10 @@ All tasks have been successfully completed! Block Quest is now a fully functiona
 
 ### Repository
 - **GitHub**: [https://github.com/faithful1ofall/Block-Quest](https://github.com/faithful1ofall/Block-Quest)
-- **Latest Commit**: `041cf7c` - feat: deploy contract to testnet and integrate real NFT minting
+- **Latest Commits**: 
+  - `f450062` - docs: update documentation and remove sensitive info
+  - `ff34f70` - refactor: update to modern Stacks Connect API
+  - `041cf7c` - feat: deploy contract to testnet and integrate real NFT minting
 
 ---
 
