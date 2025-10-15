@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'VT323', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0f172a;
+  color: #fde047;
+}
+
+.pixel-font {
+  font-family: 'Press Start 2P', cursive;
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 10px #fde047, 0 0 20px #fde047;
+  }
+  
+  .box-shadow-neon {
+    box-shadow: 0 0 10px #fde047, 0 0 20px #fde047, 0 0 30px #fde047;
+  }
+}
