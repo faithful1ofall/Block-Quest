@@ -16,8 +16,8 @@ const WalletConnect = () => {
     }
   }, []);
 
-  const handleConnect = () => {
-    connectWallet(
+  const handleConnect = async () => {
+    await connectWallet(
       (address) => {
         setWallet(address);
       },

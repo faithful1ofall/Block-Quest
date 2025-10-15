@@ -1,48 +1,45 @@
-import { AppConfig, UserSession, showConnect } from '@stacks/connect';
-import { openContractCall } from '@stacks/connect';
+import { connect, disconnect, isConnected, getLocalStorage, request } from '@stacks/connect';
 import { 
   uintCV, 
-  standardPrincipalCV,
   PostConditionMode,
 } from '@stacks/transactions';
 
-const appConfig = new AppConfig(['store_write', 'publish_data']);
-export const userSession = new UserSession({ appConfig });
+// Connect wallet using modern Stacks Connect API
+export const connectWallet = async (onFinish, onCancel) => {
+  try {
+    // Check if already connected
+    if (isConnected()) {
+      const userData = getLocalStorage();
+      if (userData?.addresses?.stx?.[0]?.address) {
+        onFinish(userData.addresses.stx[0].address);
+        return;
+      }
+    }
 
-const appDetails = {
-  name: 'Block Quest',
-  icon: window.location.origin + '/logo.png',
-};
-
-export const connectWallet = (onFinish, onCancel) => {
-  showConnect({
-    appDetails,
-    onFinish: () => {
-      const userData = userSession.loadUserData();
-      const address = userData.profile.stxAddress.testnet || userData.profile.stxAddress.mainnet;
+    // Connect to wallet
+    const response = await connect();
+    
+    if (response?.addresses?.stx?.[0]?.address) {
+      const address = response.addresses.stx[0].address;
       onFinish(address);
-    },
-    onCancel: () => {
-      if (onCancel) onCancel();
-    },
-    userSession,
-  });
+    }
+  } catch (error) {
+    console.error('Wallet connection error:', error);
+    if (onCancel) onCancel();
+  }
 };
 
 export const disconnectWallet = () => {
-  userSession.signUserOut();
+  disconnect();
 };
 
 export const isWalletConnected = () => {
-  return userSession.isUserSignedIn();
+  return isConnected();
 };
 
 export const getWalletAddress = () => {
-  if (userSession.isUserSignedIn()) {
-    const userData = userSession.loadUserData();
-    return userData.profile.stxAddress.testnet || userData.profile.stxAddress.mainnet;
-  }
-  return null;
+  const userData = getLocalStorage();
+  return userData?.addresses?.stx?.[0]?.address || null;
 };
 
 // Contract details
@@ -51,52 +48,46 @@ const CONTRACT_NAME = 'quest-nft';
 
 // Mint Quest Pass NFT
 export const mintQuestPass = async () => {
-  return new Promise((resolve, reject) => {
-    openContractCall({
-      network: 'testnet',
-      contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAME,
+  try {
+    const response = await request('stx_callContract', {
+      contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
       functionName: 'mint-quest-pass',
       functionArgs: [],
       postConditionMode: PostConditionMode.Allow,
-      onFinish: (data) => {
-        console.log('Quest Pass minted, txId:', data.txId);
-        resolve({
-          success: true,
-          txId: data.txId,
-          message: 'Quest Pass NFT minted successfully!',
-        });
-      },
-      onCancel: () => {
-        reject(new Error('Transaction cancelled'));
-      },
     });
-  });
+
+    console.log('Quest Pass minted, txId:', response.txid);
+    return {
+      success: true,
+      txId: response.txid,
+      message: 'Quest Pass NFT minted successfully!',
+    };
+  } catch (error) {
+    console.error('Error minting Quest Pass:', error);
+    throw error;
+  }
 };
 
 // Mint Quest Badge NFT
 export const mintQuestBadge = async (level) => {
-  return new Promise((resolve, reject) => {
-    openContractCall({
-      network: 'testnet',
-      contractAddress: CONTRACT_ADDRESS,
-      contractName: CONTRACT_NAME,
+  try {
+    const response = await request('stx_callContract', {
+      contract: `${CONTRACT_ADDRESS}.${CONTRACT_NAME}`,
       functionName: 'mint-quest-badge',
       functionArgs: [uintCV(level)],
       postConditionMode: PostConditionMode.Allow,
-      onFinish: (data) => {
-        console.log(`Quest Badge Level ${level} minted, txId:`, data.txId);
-        resolve({
-          success: true,
-          txId: data.txId,
-          message: `Quest Badge Level ${level} minted successfully!`,
-        });
-      },
-      onCancel: () => {
-        reject(new Error('Transaction cancelled'));
-      },
     });
-  });
+
+    console.log(`Quest Badge Level ${level} minted, txId:`, response.txid);
+    return {
+      success: true,
+      txId: response.txid,
+      message: `Quest Badge Level ${level} minted successfully!`,
+    };
+  } catch (error) {
+    console.error(`Error minting Quest Badge Level ${level}:`, error);
+    throw error;
+  }
 };
 
 // Network configuration
