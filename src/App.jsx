@@ -23,9 +23,13 @@ function AppContent() {
   };
 
   const handleConfirmMintPass = async () => {
-    const result = await mintQuestPass(walletAddress);
-    if (result.success) {
-      saveQuestPass();
+    try {
+      const result = await mintQuestPass();
+      if (result.success) {
+        saveQuestPass();
+      }
+    } catch (error) {
+      console.error('Error minting Quest Pass:', error);
     }
   };
 

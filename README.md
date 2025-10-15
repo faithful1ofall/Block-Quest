@@ -112,7 +112,12 @@ block-quest/
 
 ## 🔗 Smart Contract (Clarity)
 
-The game uses mock NFT minting for demonstration. In production, deploy this Clarity contract:
+**Deployed Contract on Stacks Testnet:**
+- **Contract Address**: `ST28MDT9SAV31XJ73M2W3W5DVC1NWHYX713Q6SEP5.quest-nft`
+- **Transaction ID**: `0x564953a1c95f0d819e0e6083bda9d37cc1bf43f9eda6a0f97ded5d72b7a66820`
+- **Explorer**: [View on Stacks Explorer](https://explorer.hiro.so/txid/0x564953a1c95f0d819e0e6083bda9d37cc1bf43f9eda6a0f97ded5d72b7a66820?chain=testnet)
+
+The contract implements:
 
 ```clarity
 ;; Quest Pass NFT
@@ -138,6 +143,8 @@ The game uses mock NFT minting for demonstration. In production, deploy this Cla
 
 ## 🎯 Roadmap
 
+- [x] Deploy smart contracts to Stacks Testnet ✅
+- [x] Integrate real wallet connection and NFT minting ✅
 - [ ] Deploy smart contracts to Stacks Mainnet
 - [ ] Add leaderboard with on-chain verification
 - [ ] Implement multiplayer mining zones

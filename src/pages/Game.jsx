@@ -25,9 +25,13 @@ const Game = ({ onBackHome }) => {
   };
 
   const handleConfirmMint = async () => {
-    const result = await mintQuestBadge(walletAddress, level);
-    if (result.success) {
-      saveBadge(level);
+    try {
+      const result = await mintQuestBadge(level);
+      if (result.success) {
+        saveBadge(level);
+      }
+    } catch (error) {
+      console.error('Error minting Quest Badge:', error);
     }
   };
 
