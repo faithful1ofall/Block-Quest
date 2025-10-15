@@ -25,9 +25,9 @@ The deployed contract includes the following public functions:
 ### Wallet Configuration
 
 The contract was deployed using:
-- **Seed Phrase**: `mirror obscure response hat track cloud timber conduct video cute business regular`
 - **Deployer Address**: `ST28MDT9SAV31XJ73M2W3W5DVC1NWHYX713Q6SEP5`
 - **Initial Balance**: 500 STX (from testnet faucet)
+- **Network**: Stacks Testnet
 
 ### Testing the Contract
 

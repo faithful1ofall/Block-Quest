@@ -58,6 +58,7 @@ Click on any unmined block to discover:
 
 - Node.js 18+ and npm
 - Stacks wallet (Hiro Wallet or Xverse)
+- Testnet STX tokens (get from [Stacks Faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet))
 
 ### Installation
 
