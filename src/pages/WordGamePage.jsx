@@ -23,16 +23,9 @@ const WordGamePage = ({ onBackHome }) => {
   const handleGameEnd = async (status, multiplier) => {
     setGameResult({ status, multiplier, reward: depositAmount * multiplier });
     
-    // Auto-resolve game for demo (in production, this would be done by backend/oracle)
+    // DEMO MODE: Auto-resolve without blockchain
     if (currentGameId !== null && status === 'won') {
-      try {
-        setTxStatus('Resolving game on blockchain...');
-        await resolveGame(currentGameId, multiplier);
-        setTxStatus('Game resolved! You can now claim your reward.');
-      } catch (error) {
-        console.error('Error resolving game:', error);
-        setTxStatus('Error resolving game. Please try again.');
-      }
+      setTxStatus('Demo mode: Game resolved! (No blockchain transaction)');
     }
   };
 
@@ -43,27 +36,30 @@ const WordGamePage = ({ onBackHome }) => {
     }
 
     setIsDepositing(true);
-    setTxStatus('Depositing STX...');
+    setTxStatus('Starting game in demo mode...');
 
     try {
-      // Convert STX to microSTX (1 STX = 1,000,000 microSTX)
-      const amountInMicroSTX = depositAmount * 1000000;
+      // DEMO MODE: Contract not yet deployed
+      // Simulating deposit without actual blockchain transaction
       
-      const result = await depositAndPlay(amountInMicroSTX);
+      // In production, this would be:
+      // const amountInMicroSTX = depositAmount * 1000000;
+      // const result = await depositAndPlay(amountInMicroSTX);
       
-      if (result.success) {
-        setTxStatus('Deposit successful! Starting game...');
-        // In a real app, we'd parse the transaction to get the game ID
-        // For now, we'll use a placeholder
-        setCurrentGameId(Date.now()); // Temporary game ID
-        setTimeout(() => {
-          handleStartGame();
-          setTxStatus('');
-        }, 1000);
-      }
+      // For now, simulate successful deposit
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setTxStatus('Demo mode: Game starting...');
+      setCurrentGameId(Date.now()); // Temporary game ID
+      
+      setTimeout(() => {
+        handleStartGame();
+        setTxStatus('');
+      }, 500);
+      
     } catch (error) {
-      console.error('Error depositing:', error);
-      setTxStatus('Deposit failed. Please try again.');
+      console.error('Error starting game:', error);
+      setTxStatus('Failed to start game. Please try again.');
       setTimeout(() => setTxStatus(''), 3000);
     } finally {
       setIsDepositing(false);
@@ -74,20 +70,20 @@ const WordGamePage = ({ onBackHome }) => {
     if (!currentGameId) return;
 
     setIsClaiming(true);
-    setTxStatus('Claiming reward...');
+    setTxStatus('Demo mode: Simulating reward claim...');
 
     try {
-      const result = await claimReward(currentGameId);
+      // DEMO MODE: Simulate claim without blockchain transaction
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      if (result.success) {
-        setTxStatus('Reward claimed successfully!');
-        setTimeout(() => {
-          setTxStatus('');
-          setGameStarted(false);
-          setGameResult(null);
-          setCurrentGameId(null);
-        }, 2000);
-      }
+      setTxStatus('Demo mode: Reward claimed! (No actual STX transferred)');
+      setTimeout(() => {
+        setTxStatus('');
+        setGameStarted(false);
+        setGameResult(null);
+        setCurrentGameId(null);
+      }, 2000);
+      
     } catch (error) {
       console.error('Error claiming reward:', error);
       setTxStatus('Claim failed. Please try again.');
@@ -109,15 +105,33 @@ const WordGamePage = ({ onBackHome }) => {
           Back to Home
         </button>
 
+        {/* Demo Mode Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute top-4 right-4 bg-blue-600/20 border-2 border-blue-500 rounded-lg px-4 py-2"
+        >
+          <p className="font-pixel text-blue-300 text-sm">🎮 DEMO MODE</p>
+          <p className="font-retro text-blue-400 text-xs">No real STX transactions</p>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-2xl w-full"
         >
           {/* Title */}
-          <h1 className="font-pixel text-4xl text-game-yellow text-center mb-8">
+          <h1 className="font-pixel text-4xl text-game-yellow text-center mb-4">
             Word Quest
           </h1>
+          
+          {/* Demo Notice */}
+          <div className="bg-blue-600/10 border border-blue-500 rounded-lg p-4 mb-6 text-center">
+            <p className="font-pixel text-blue-300 text-sm mb-1">⚠️ Demo Mode Active</p>
+            <p className="font-retro text-blue-400 text-xs">
+              Smart contract not yet deployed. Play for free without real STX transactions.
+            </p>
+          </div>
 
           {/* Game Info */}
           <div className="bg-game-blue/10 border-2 border-game-yellow rounded-lg p-8 mb-8">
@@ -209,8 +223,12 @@ const WordGamePage = ({ onBackHome }) => {
                 : 'bg-gray-600 text-gray-400 cursor-not-allowed'
             }`}
           >
-            {isDepositing ? 'Depositing...' : walletAddress ? 'Deposit & Start Game' : 'Connect Wallet First'}
+            {isDepositing ? 'Starting...' : walletAddress ? 'Start Game (Demo)' : 'Connect Wallet First'}
           </motion.button>
+          
+          <p className="text-center font-retro text-gray-500 text-xs mt-2">
+            * Demo mode: No actual deposit required
+          </p>
         </motion.div>
       </div>
     );
