@@ -21,12 +21,31 @@ const WordGame = ({ onGameEnd, onDeposit }) => {
   const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', 'lost'
   const [shakeRow, setShakeRow] = useState(-1);
   const [message, setMessage] = useState('');
+  const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
     // Select random word on mount
     const randomWord = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
     setTargetWord(randomWord);
   }, []);
+
+  // Physical keyboard support
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (gameStatus !== 'playing') return;
+
+      if (e.key === 'Enter') {
+        handleKeyPress('ENTER');
+      } else if (e.key === 'Backspace') {
+        handleKeyPress('BACKSPACE');
+      } else if (/^[a-zA-Z]$/.test(e.key)) {
+        handleKeyPress(e.key.toUpperCase());
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [gameStatus, currentGuess, guesses, targetWord]); // Include dependencies
 
   const getCellColor = (letter, index, guess) => {
     if (!guess) return 'bg-gray-700 border-gray-600';
@@ -144,13 +163,34 @@ const WordGame = ({ onGameEnd, onDeposit }) => {
         <h1 className="font-pixel text-3xl text-game-yellow text-center mb-2">
           Word Quest
         </h1>
-        <div className="flex justify-between items-center text-white font-retro">
+        <div className="flex justify-between items-center text-white font-retro mb-3">
           <div className="text-sm">
             Attempt: {guesses.length + 1}/{MAX_ATTEMPTS}
           </div>
           <div className="text-lg font-pixel text-game-yellow">
             {getMultiplierDisplay()}x Multiplier
           </div>
+        </div>
+        
+        {/* Hint Section */}
+        <div className="flex justify-center items-center gap-3">
+          <button
+            onClick={() => setShowHint(!showHint)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-pixel text-sm transition-colors"
+          >
+            {showHint ? 'Hide Hint' : 'Show Hint'}
+          </button>
+          {showHint && targetWord && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-blue-600/20 border-2 border-blue-500 rounded px-4 py-2"
+            >
+              <span className="font-pixel text-blue-300 text-sm">
+                First letter: <span className="text-game-yellow text-lg">{targetWord[0]}</span>
+              </span>
+            </motion.div>
+          )}
         </div>
       </div>
 
@@ -253,9 +293,9 @@ const WordGame = ({ onGameEnd, onDeposit }) => {
         </div>
       </div>
 
-      {/* Physical Keyboard Support */}
+      {/* Keyboard Support Info */}
       <div className="mt-4 text-gray-500 font-retro text-xs text-center">
-        Use your keyboard to type
+        💻 PC Keyboard or 📱 Touch Keyboard supported
       </div>
 
       {/* Game Over Actions */}
@@ -275,24 +315,6 @@ const WordGame = ({ onGameEnd, onDeposit }) => {
       )}
     </div>
   );
-};
-
-// Physical keyboard event listener hook
-export const useKeyboard = (handleKeyPress) => {
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Enter') {
-        handleKeyPress('ENTER');
-      } else if (e.key === 'Backspace') {
-        handleKeyPress('BACKSPACE');
-      } else if (/^[a-zA-Z]$/.test(e.key)) {
-        handleKeyPress(e.key.toUpperCase());
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyPress]);
 };
 
 export default WordGame;
