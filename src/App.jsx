@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import { GameProvider, useGame } from './context/GameContext';
 import Home from './pages/Home';
 import Game from './pages/Game';
+import PhysicsGamePage from './pages/PhysicsGamePage';
 import MintModal from './components/MintModal';
 import { mintQuestPass } from './utils/stacks';
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [gameMode, setGameMode] = useState('physics'); // 'classic' or 'physics'
   const [showMintPassModal, setShowMintPassModal] = useState(false);
   const { walletAddress, mintQuestPass: saveQuestPass } = useGame();
 
-  const handleStartGame = () => {
+  const handleStartGame = (mode = 'physics') => {
+    setGameMode(mode);
     setCurrentPage('game');
   };
 
@@ -37,6 +40,8 @@ function AppContent() {
     <>
       {currentPage === 'home' ? (
         <Home onStartGame={handleStartGame} onMintPass={handleMintPass} />
+      ) : gameMode === 'physics' ? (
+        <PhysicsGamePage onBackHome={handleBackHome} />
       ) : (
         <Game onBackHome={handleBackHome} />
       )}

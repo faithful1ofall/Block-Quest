@@ -51,8 +51,8 @@ const Home = ({ onStartGame, onMintPass }) => {
             <div className="flex items-start gap-3">
               <FaCoins className="text-game-yellow text-3xl mt-1" />
               <div>
-                <h3 className="font-pixel text-sm text-white mb-2">Mine Blocks</h3>
-                <p className="font-retro text-gray-300">Click tiles to discover coins (60%), crystals (20%), empty blocks (15%), or traps (5%)</p>
+                <h3 className="font-pixel text-sm text-white mb-2">Physics Shooting</h3>
+                <p className="font-retro text-gray-300">Drag and release to launch projectiles! Destroy blocks with realistic physics like Angry Birds</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -84,7 +84,7 @@ const Home = ({ onStartGame, onMintPass }) => {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            onClick={onStartGame}
+            onClick={() => onStartGame('physics')}
             disabled={!walletConnected}
             className={`flex items-center gap-3 px-8 py-4 rounded-lg font-pixel text-lg transition-all ${
               walletConnected
@@ -93,7 +93,22 @@ const Home = ({ onStartGame, onMintPass }) => {
             }`}
           >
             <FaGamepad />
-            Start Quest
+            Play Physics Mode
+          </motion.button>
+          
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => onStartGame('classic')}
+            disabled={!walletConnected}
+            className={`flex items-center gap-3 px-8 py-4 rounded-lg font-pixel text-sm transition-all ${
+              walletConnected
+                ? 'bg-purple-600 text-white hover:bg-purple-700 cursor-pointer'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            <FaGamepad />
+            Classic Mode
           </motion.button>
 
           {walletConnected && !questPassMinted && (

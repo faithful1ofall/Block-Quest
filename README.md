@@ -8,12 +8,27 @@ A browser-based blockchain mining adventure built on **Stacks** (Bitcoin Layer 2
 
 ## 🎮 About
 
-Block Quest is an interactive mining game where players click blocks to discover treasures, earn XP, level up, and mint NFTs on the Stacks blockchain as proof of their achievements. The game combines classic arcade-style gameplay with Web3 technology.
+Block Quest is a physics-based shooting game inspired by Angry Birds, where players launch projectiles to destroy block structures, earn points, level up, and mint NFTs on the Stacks blockchain as proof of their achievements. The game combines engaging physics gameplay with Web3 technology.
+
+### Game Modes
+
+- **Physics Mode** 🎯 - Angry Birds-style slingshot mechanics with realistic physics
+- **Classic Mode** 💎 - Original click-to-mine gameplay
 
 ## ✨ Features
 
+### Physics Mode (NEW!)
+- 🎯 **Slingshot Mechanics** - Drag and release to launch projectiles
+- 💥 **Realistic Physics** - Powered by Matter.js physics engine
+- 🧱 **Destructible Blocks** - Wooden, stone, metal, and crystal blocks
+- 📊 **Trajectory Preview** - See your shot path before launching
+- 🎮 **Multiple Projectile Types** - Standard, heavy, explosive, and crystal blocks
+
+### Classic Mode
 - 🎯 **Interactive Mining Grid** - 10×10 grid with randomized rewards
 - 💰 **Resource Collection** - Gather coins, crystals, and avoid traps
+
+### Shared Features
 - 📈 **Leveling System** - Earn XP and level up your character
 - 🏆 **NFT Minting** - Mint Quest Pass and Quest Badge NFTs on Stacks
 - 🔗 **Wallet Integration** - Connect with Stacks wallet (Hiro, Xverse)
@@ -22,7 +37,21 @@ Block Quest is an interactive mining game where players click blocks to discover
 
 ## 🎲 Gameplay
 
-### Mining Mechanics
+### Physics Mode (Angry Birds Style) 🎯
+
+**How to Play:**
+1. **Aim** - Click and drag from the slingshot to aim
+2. **Power** - Pull back further for more power
+3. **Release** - Let go to launch your projectile
+4. **Destroy** - Hit blocks to earn points and progress
+
+**Block Types:**
+- **Wooden Blocks** 🟫 - Easy to destroy (10 points)
+- **Stone Blocks** ⬜ - Medium difficulty (25 points)
+- **Metal Blocks** ⬛ - Hard to destroy (50 points)
+- **Crystal Blocks** 💎 - Bonus points (100 points)
+
+### Classic Mode 💎
 
 Click on any unmined block to discover:
 - **60%** - Coins 💰 (+10 coins, +10 XP)
@@ -47,6 +76,7 @@ Click on any unmined block to discover:
 - **Frontend**: React 19, Vite
 - **Styling**: TailwindCSS 4.1
 - **Animations**: Framer Motion
+- **Physics Engine**: Matter.js
 - **Blockchain**: Stacks.js, @stacks/connect
 - **Icons**: React Icons
 - **State Management**: React Context API
